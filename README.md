@@ -1,5 +1,7 @@
 # digital-flash-cards
 
+ドイツ語の単語帳です。単語は追加と検索ができます。
+
 ## Project setup
 ```
 npm install
