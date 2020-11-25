@@ -1,12 +1,11 @@
-import { createStore } from 'vuex'
+import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
-export default createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
+import vocabulary from "./vocabulary.js";
+
+export default new Vuex.Store({
   modules: {
-  }
-})
+    vocabulary,
+  },
+  plugins: [createPersistedState()],
+});

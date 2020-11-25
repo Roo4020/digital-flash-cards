@@ -1,30 +1,56 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="app">
+    <div class="app-main" v-if="$route.path !== '/'">
+      <GlobalHeader />
+      <PartOfSpeech />
+      <router-view />
+      <GlobalFooter />
+    </div>
+    <router-view v-else />
   </div>
-  <router-view/>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import GlobalHeader from "@/components/layouts/GlobalHeader.vue";
+import PartOfSpeech from "@/components/layouts/PartOfSpeech.vue";
+import GlobalFooter from "@/components/layouts/GlobalFooter.vue";
+
+export default {
+  name: "App",
+  components: {
+    GlobalHeader,
+    PartOfSpeech,
+    GlobalFooter,
+  },
+};
+</script>
+
+<style lang="scss">
+* {
+  box-sizing: border-box;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+html,
+body,
+#app,
+.app {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  &-main {
+    width: 100%;
+    height: 100%;
+    background: rgb(244, 244, 244);
+    .page {
+      width: 100%;
+      min-height: calc(100% - 222px);
+      height: auto !important;
+      height: calc(100% - 222px);
+      background: rgb(244, 244, 244);
+      padding-bottom: 20px;
+      position: relative;
+      top: 112px;
+    }
+  }
 }
 </style>

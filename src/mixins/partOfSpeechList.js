@@ -1,0 +1,1 @@
+export const PART_OF_SPEECH_LIST = ["名詞", "動詞", "形容詞etc", "前置詞", "接続詞"]
