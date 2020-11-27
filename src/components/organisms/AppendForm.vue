@@ -96,33 +96,33 @@ export default {
     clearValidate() {
       let clear = true;
       if (this.appendList.length !== this.form.length) {
-        this.validateList[this.form.length - 1] = true;
+        this.validateList[this.form.length - 1] = false;
         clear = false;
         console.log(this.form.length - 1);
       } else {
-        this.validateList[this.form.length - 1] = false;
+        this.validateList[this.form.length - 1] = true;
       }
       for (let i = 0; i < this.form.length - 1; i++) {
         const exp = this.form[i].validate;
         if (this.selectPoS === 1 && i === 3) {
           for (let j = 0; j < 4; j++) {
             this.validateList[3][j] = this.validate(exp, this.appendList[3][j]);
-            clear = clear && !(this.validateList[3][j]) ? true : false;
+            clear = clear && this.validateList[3][j] ? true : false;
           }
         } else {
           this.validateList[i] = this.validate(exp, this.appendList[i]);
-          clear = clear && !(this.validateList[i]) ? true : false;
+          clear = clear && this.validateList[i] ? true : false;
         }
       }
       return clear;
     },
     validate(exp, append) {
       if (append === undefined) {
-        return true;
-      } else if (exp.test(append)) {
         return false;
-      } else {
+      } else if (exp.test(append)) {
         return true;
+      } else {
+        return false;
       }
     },
     resetArray() {

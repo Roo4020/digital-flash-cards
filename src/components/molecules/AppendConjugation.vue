@@ -38,7 +38,7 @@ export default {
     setValidate() {
       const validate = this.validate;
       return function (id) {
-        return validate[id] ? "error" : "";
+        return validate[id] || validate[id] === undefined ? "" : "error";
       };
     },
   },
