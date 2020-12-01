@@ -8,7 +8,9 @@
         <div class="menu-box-content" @click="transAppend">追加</div>
         <div class="menu-box-content" @click="transTop">トップへ</div>
       </div>
-      <div class="menu-shift" @click="shiftBoxSize">Menu</div>
+      <div class="menu-shift" @click="shiftBoxSize">
+        <img :src="require(`@/assets/icon/${ iconName }.svg`)" />
+      </div>
     </div>
   </div>
 </template>
@@ -33,6 +35,9 @@ export default {
     setClassOpen() {
       return this.openMenu ? "open" : "";
     },
+    iconName() {
+      return this.openMenu ? "menu_close" : "menu_open";
+    }
   },
   methods: {
     transFlashCards() {
@@ -83,6 +88,7 @@ export default {
       display: flex;
       justify-content: space-around;
       align-items: center;
+      margin-right: 4px;
       overflow: hidden;
       transition: all 0.4s ease;
       &-content {
@@ -103,17 +109,14 @@ export default {
     }
 
     &-shift {
-      width: 48px;
-      height: 48px;
-      font-size: 14px;
+      transform: scale(1.5, 1.5);
       display: flex;
       justify-content: center;
       align-items: center;
-      border: 1px solid silver;
+      border: 1px solid white;
       padding: 2px;
       cursor: pointer;
       &:hover {
-        color: silver !important;
         border-color: silver !important;
       }
     }
