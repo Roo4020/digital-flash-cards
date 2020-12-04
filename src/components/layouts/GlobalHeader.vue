@@ -92,7 +92,7 @@ export default {
       overflow: hidden;
       transition: all 0.4s ease;
       &-content {
-        font-size: 14px;
+        font-size: 16px;
         text-decoration: underline;
         margin: 0px 4px;
         cursor: pointer;
@@ -102,7 +102,7 @@ export default {
       }
     }
     .open {
-      width: 192px !important;
+      width: 216px !important;
       height: auto !important;
       text-overflow: ellipsis;
       white-space: nowrap;
