@@ -54,7 +54,10 @@ export default {
       this.$router.push("/");
     },
     transTopOfPage() {
-        scrollTo(0, 0);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     },
   },
 };
