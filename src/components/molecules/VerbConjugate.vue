@@ -16,7 +16,6 @@ import { SUBJECT_LIST } from "@/mixins/subjectList.js";
 export default {
   name: "VerbConjugate",
   props: {
-    backBlack: Boolean,
     show: Boolean,
     target: Object,
   },
@@ -30,7 +29,7 @@ export default {
       return this.show ? "open" : "";
     },
     setClassBackBlack() {
-      return this.backBlack ? "back-black" : "";
+      return this.$route.path === '/search' ? "back-black" : "";
     },
   },
 };

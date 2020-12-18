@@ -10,7 +10,7 @@
         :word="word"
         :entry="item"
       />
-      <VerbConjugate v-if="selectPoS === 1" :backBlack="true" :show="true" :target="word" />
+      <VerbConjugate v-if="selectPoS === 1" :show="true" :target="word" />
     </div>
     <CommonButton label="戻る" @click-event="backSearch" />
   </div>
