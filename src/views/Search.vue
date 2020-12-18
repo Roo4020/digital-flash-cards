@@ -46,10 +46,10 @@ export default {
   },
   computed: {
     selectPoS() {
-      return this.$store.state.vocabulary.selectPoS;
+      return this.$store.state.common.selectPoS;
     },
     targetList() {
-      return this.$store.getters.targetList;
+      return this.$store.getters.targetList(this.selectPoS);
     },
     hitWordList() {
       const keyWord = this.keyWord;

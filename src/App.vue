@@ -7,12 +7,14 @@
       <GlobalFooter />
     </div>
     <router-view v-else />
+    <GlobalAside />
   </div>
 </template>
 
 <script>
 import GlobalHeader from "@/components/layouts/GlobalHeader.vue";
 import PartOfSpeech from "@/components/layouts/PartOfSpeech.vue";
+import GlobalAside from "@/components/layouts/GlobalAside.vue";
 import GlobalFooter from "@/components/layouts/GlobalFooter.vue";
 
 export default {
@@ -20,7 +22,11 @@ export default {
   components: {
     GlobalHeader,
     PartOfSpeech,
+    GlobalAside,
     GlobalFooter,
+  },
+  created() {
+    this.$store.dispatch("getWordList");
   },
 };
 </script>

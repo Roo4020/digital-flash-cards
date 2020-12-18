@@ -1,126 +1,80 @@
+import firebase from "firebase/app";
+import "firebase/firestore";
+
 const vocabulary = {
-    namespaced: false,
+  namespaced: false,
 
-    state: {
-        nounList: [{
-                word: "Mann",
-                meaning: "男の人",
-                distinction: "男性",
-                plural: "Männer",
-                representative: true,
-            },
-            {
-                word: "Frau",
-                meaning: "女の人",
-                distinction: "女性",
-                plural: "Frauen",
-                representative: true,
-            },
-        ],
-        verbList: [{
-                word: "heißen",
-                meaning: "という名前である",
-                distinction: "一般動詞",
-                conjugationList: ["heiße", "heißt", "heißt", "heißt"],
-                representative: true,
-            },
-            {
-                word: "fragen",
-                meaning: "尋ねる",
-                distinction: "一般動詞",
-                conjugationList: ["frage", "fragst", "fragt", "fragt"],
-                representative: true,
-            },
-        ],
-        adjectiveList: [{
-                word: "gut",
-                meaning: "良い",
-                distinction: "形容詞",
-                representative: true,
-            },
-            {
-                word: "schlecht",
-                meaning: "悪い",
-                distinction: "形容詞",
-                representative: true,
-            },
-        ],
-        prepositionList: [{
-                word: "wegen",
-                meaning: "のせいで",
-                case: "2格",
-                representative: true,
-            },
-            {
-                word: "von",
-                meaning: "から",
-                case: "3格",
-                representative: true,
-            },
-        ],
-        conjunctionList: [{
-                word: "und",
-                meaning: "そして",
-                distinction: "並列",
-                representative: true,
-            },
-            {
-                word: "also",
-                meaning: "だから",
-                distinction: "副詞的",
-                representative: true,
-            },
-        ],
+  state: {
+    vocabularyList: [],
+    docLabelList: [
+      "nounList",
+      "verbList",
+      "adjectiveList",
+      "prepositionList",
+      "conjunctionList"
+    ],
+  },
 
-        selectPoS: 0,
-        translate: 0, //0が「独→日」、1が「日→独」
+  getters: {
+    targetList(state) {
+      return function (id) {
+        return state.vocabularyList[id];
+      }
     },
+    representativeTargetList(state) {
+      return function (id) {
+        return state.vocabularyList[id].filter(word => word.representative);
+      }
+    },
+  },
 
-    getters: {
-        targetList(state) {
-            const array = [
-                state.nounList,
-                state.verbList,
-                state.adjectiveList,
-                state.prepositionList,
-                state.conjunctionList,
-            ];
-            return array[state.selectPoS];
-        },
-        representativeTargetList(state) {
-            const array = [
-                state.nounList,
-                state.verbList,
-                state.adjectiveList,
-                state.prepositionList,
-                state.conjunctionList,
-            ];
-            return array[state.selectPoS].filter(word => word.representative);
-        },
+  actions: {
+    getWordList({
+      commit
+    }) {
+      firebase.firestore().collection('vocabulary').orderBy('id').get()
+        .then((doc) => {
+          doc.forEach(element => {
+            commit("setVocabularyList", {
+              key: element.data().id - 1,
+              data: element.data().value
+            });
+          })
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    
-    mutations: {
-        changeSelectPoS(state, payload) {
-            state.selectPoS = payload;
-        },
-        changeTranslate(state, payload) {
-            state.translate = payload;
-        },
-        appendWord(state, payload) {
-            const array = [
-                state.nounList,
-                state.verbList,
-                state.adjectiveList,
-                state.prepositionList,
-                state.conjunctionList,
-            ];
-            const newWord = {};
-            for (let i in payload.form) {
-                newWord[payload.form[i].keyName] = payload.append[i];
-            }
-            array[state.selectPoS].push(newWord);
-        },
+    appendWord({
+      state,
+      dispatch
+    }, payload) {
+      const list = state.vocabularyList[payload.selectPoS];
+      const newWord = {};
+      for (let i in payload.form) {
+        newWord[payload.form[i].keyName] = payload.append[i];
+      }
+      list.push(newWord);
+      dispatch("updateWordList", {key: payload.selectPoS, data: list});
     },
+    updateWordList({
+      state,
+      dispatch
+    }, payload) {
+      const docId = state.docLabelList[payload.key];
+      const wordRef = firebase.firestore().collection('vocabulary').doc(docId);
+      wordRef.update({
+        value: payload.data,
+      });
+      dispatch("getWordList");
+    },
+  },
+
+  mutations: {
+    setVocabularyList(state, payload) {
+      state.vocabularyList[payload.key] = payload.data;
+    },
+  },
 };
 
 export default vocabulary;

@@ -3,7 +3,7 @@
     <div class="target">{{ target[question] }}</div>
     <div class="answer-form">
       <FlashCardsForm
-        v-for="(item, index) in choiceForm"
+        v-for="(item, index) in filteredForm"
         :key="index"
         :item="item"
         :id="index"
@@ -50,7 +50,7 @@ export default {
     this.target = this.list[id];
   },
   computed: {
-    choiceForm() {
+    filteredForm() {
       const question = this.question;
       return this.form.filter(function (item) {
         return item.keyName !== question && item.keyName !== "representative" && item.keyName !== "conjugationList";
@@ -80,10 +80,10 @@ export default {
     },
     buttonEvent() {
       if (!this.showAnswer) {
-        for (let i = 0; i < this.choiceForm.length; i++) {
+        for (let i = 0; i < this.filteredForm.length; i++) {
           this.checkAnswerList[i] = this.checkAnswer(
             this.submissionList[i],
-            this.target[this.choiceForm[i].keyName]
+            this.target[this.filteredForm[i].keyName]
           );
         }
         this.buttonLabel = "次へ";

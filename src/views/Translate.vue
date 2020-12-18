@@ -26,15 +26,15 @@ export default {
   },
   computed: {
     selectPoS() {
-      return this.$store.state.vocabulary.selectPoS;
+      return this.$store.state.common.selectPoS;
     },
     translate() {
-      return this.$store.state.vocabulary.translate;
+      return this.$store.state.common.translate;
     },
     targetList() {
       return this.translate === 0
-        ? this.$store.getters.targetList
-        : this.$store.getters.representativeTargetList;
+        ? this.$store.getters.targetList(this.selectPoS)
+        : this.$store.getters.representativeTargetList(this.selectPoS);
     },
     question() {
       return this.translate === 0 ? "word" : "meaning";

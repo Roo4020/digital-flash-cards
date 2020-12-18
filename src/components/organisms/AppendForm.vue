@@ -80,20 +80,21 @@ export default {
       this.appendList[3][id] = value;
     },
     async buttonEvent() {
-      if (!(await this.clearValidate())) {
+      if (!(await this.checkValidate())) {
         this.message = "適切でない項目があります";
         console.log(this.validateList);
       } else {
         this.message = "追加できました";
-        this.$store.commit("appendWord", {
+        this.$store.dispatch("appendWord", {
           append: this.appendList,
           form: this.form,
+          selectPoS: this.selectPoS,
         });
-        console.log(this.$store.getters.targetList);
+        console.log(this.$store.getters.targetList(this.selectPoS));
         this.resetArray();
       }
     },
-    clearValidate() {
+    checkValidate() {
       let clear = true;
       if (this.appendList.length !== this.form.length) {
         this.validateList[this.form.length - 1] = false;

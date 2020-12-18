@@ -23,7 +23,7 @@ export default {
   },
   computed: {
     setClassSelect() {
-      const select = this.$store.state.vocabulary.selectPoS;
+      const select = this.$store.state.common.selectPoS;
       return function (id) {
         return select === id ? "selected" : "";
       };

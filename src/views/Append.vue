@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     selectPoS() {
-      return this.$store.state.vocabulary.selectPoS;
+      return this.$store.state.common.selectPoS;
     },
   },
 };
