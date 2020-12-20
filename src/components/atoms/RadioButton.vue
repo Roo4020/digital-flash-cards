@@ -32,6 +32,7 @@ export default {
 
 <style lang="scss" scoped>
 .radio {
+  height: 36px;
   display: flex;
   flex-wrap: nowrap;
   justify-content: right;
@@ -40,7 +41,6 @@ export default {
     font-size: 22px;
     flex: none;
     margin-right: 16px;
-    overflow-x: visible;
   }
 }
 </style>

@@ -1,11 +1,13 @@
 <template>
   <div class="page">
-    <FlashCards
+    <div class="translate">
+      <FlashCards
       :question="question"
       :selectPoS="selectPoS"
       :list="targetList"
       :form="formList[selectPoS]"
     />
+    </div>
   </div>
 </template>
 
@@ -44,4 +46,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.translate {
+  width: 60%;
+  min-width: 375px;
+  margin: 0 auto;
+}
 </style>

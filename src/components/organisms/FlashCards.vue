@@ -1,18 +1,21 @@
 <template>
   <div class="flash-cards">
     <div class="target">{{ target[question] }}</div>
-    <div class="answer-form">
-      <FlashCardsForm
-        v-for="(item, index) in filteredForm"
-        :key="index"
+    <div class="answer" v-for="(item, index) in filteredForm" :key="index">
+      <FormComponent
         :item="item"
         :id="index"
-        :target="target"
-        :submission="submissionList"
-        :checkAnswer="checkAnswerList"
-        :showAnswer="showAnswer"
-        @change-submission="changeSubmission"
+        :value="submissionList[index]"
+        :validate="checkCorrectList"
+        size="normal"
+        @change-value="changeSubmission"
       />
+      <div
+        class="correct"
+        v-if="checkCorrectList[index] === 'wrong' && showAnswer"
+      >
+        {{ target[item.keyName] }}
+      </div>
     </div>
     <CommonButton :label="buttonLabel" @click-event="buttonEvent" />
     <VerbConjugate v-if="selectPoS === 1" :show="showAnswer" :target="target" />
@@ -20,14 +23,14 @@
 </template>
 
 <script>
-import FlashCardsForm from "@/components/molecules/FlashCardsForm.vue";
+import FormComponent from "@/components/molecules/FormComponent.vue";
 import VerbConjugate from "@/components/molecules/VerbConjugate.vue";
 import CommonButton from "@/components/atoms/CommonButton.vue";
 
 export default {
   name: "FlashCards",
   components: {
-    FlashCardsForm,
+    FormComponent,
     VerbConjugate,
     CommonButton,
   },
@@ -41,7 +44,7 @@ export default {
     return {
       target: null,
       submissionList: [],
-      checkAnswerList: [],
+      checkCorrectList: [],
       buttonLabel: "送信",
     };
   },
@@ -52,8 +55,12 @@ export default {
   computed: {
     filteredForm() {
       const question = this.question;
-      return this.form.filter(function (item) {
-        return item.keyName !== question && item.keyName !== "representative" && item.keyName !== "conjugationList";
+      return this.form.filter((item) => {
+        return (
+          item.keyName !== question &&
+          item.keyName !== "representative" &&
+          item.keyName !== "conjugationList"
+        );
       });
     },
     showAnswer() {
@@ -81,7 +88,7 @@ export default {
     buttonEvent() {
       if (!this.showAnswer) {
         for (let i = 0; i < this.filteredForm.length; i++) {
-          this.checkAnswerList[i] = this.checkAnswer(
+          this.checkCorrectList[i] = this.checkCorrect(
             this.submissionList[i],
             this.target[this.filteredForm[i].keyName]
           );
@@ -91,17 +98,17 @@ export default {
         this.resetWord();
       }
     },
-    checkAnswer(submission, answer) {
+    checkCorrect(submission, answer) {
       if (submission === answer) {
-        return true;
+        return "correct";
       } else {
-        return false;
+        return "wrong";
       }
     },
     resetWord() {
       this.targetAtRandom();
       this.submissionList = [];
-      this.checkAnswerList = [];
+      this.checkCorrectList = [];
       this.buttonLabel = "送信";
     },
   },
@@ -110,6 +117,7 @@ export default {
 
 <style lang="scss" scoped>
 .flash-cards {
+  width: 100%;
   text-align: center;
   overflow-y: scroll;
   .target {
@@ -126,10 +134,26 @@ export default {
     white-space: nowrap;
   }
 
-  .answer-form {
-    width: 100%;
-    margin-top: 24px !important;
+  .answer {
+    max-width: 400px;
+    display: grid;
+    grid-template:
+      ".... ......." 4px
+      "form correct" auto
+      ".... ......." 4px
+      / 1fr auto;
+    gap: 16px;
+    margin: 0 auto;
     overflow-x: scroll;
+    .form {
+      grid-area: form;
+    }
+    .correct {
+      grid-area: correct;
+      font-size: 20px;
+      color: red;
+      white-space: nowrap;
+    }
   }
 
   button {

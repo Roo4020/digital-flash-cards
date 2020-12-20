@@ -1,11 +1,12 @@
 <template>
   <div class="search-box">
     <SelectBox
+      class="left"
       :value="language"
       :data="languageList"
       @change-value="shiftLanguage"
     />
-    <TextField :value="keyWord" @change-value="changeKeyWord" />
+    <TextField class="right" :value="keyWord" @change-value="changeKeyWord" />
   </div>
 </template>
 
@@ -38,19 +39,20 @@ export default {
 <style lang="scss" scoped>
 .search-box {
   width: 100%;
-  flex: initial;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template:
+   "left right" 36px
+   / auto minmax(192px, 1fr);
+  gap: 16px;
   border: 1px solid black;
   border-radius: 16px;
   padding: 16px;
 
-  input[type="text"] {
-    height: 40px;
-    font-size: 28px;
-    text-align: left;
-    margin-left: 16px;
+  .left {
+    grid-area: left;
+  }
+  .right {
+    grid-area: right;
   }
 }
 </style>

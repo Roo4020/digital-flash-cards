@@ -27,14 +27,13 @@ export default {
 };
 </script>
 
-<style lahg="scss" scoped>
+<style lang="scss" scoped>
 select {
-  height: 30px;
-  font-size: 20px;
-  text-align: center;
+  height: 36px;
+  font-size: 24px;
   border: none;
   border-bottom: 1px solid gray;
-  padding: 0px 4px;
+  padding: 0px 8px;
   outline: none;
 }
 </style>

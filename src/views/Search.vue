@@ -2,21 +2,23 @@
   <div class="page">
     <div class="search">
       <div class="title">検索</div>
-      <div class="key-word">
-        <SearchBox
-          :languageList="languageList"
-          :language="selectLanguage"
-          :keyWord="keyWord"
-          @shift-language="changeLanguage"
-          @change-key-word="changeKeyWord"
-        />
-      </div>
+      <SearchBox
+        :languageList="languageList"
+        :language="selectLanguage"
+        :keyWord="keyWord"
+        @shift-language="changeLanguage"
+        @change-key-word="changeKeyWord"
+      />
       <div class="result" v-if="searching">
         <div class="result-header">検索結果 {{ hitWordList.length }}件</div>
         <SearchResult :hitWordList="hitWordList" @click-word="showDetails" />
       </div>
       <div class="remark" v-else>
-        <RemarkWord :word="remarkWord" :selectPoS="selectPoS" @back-search="backSearch" />
+        <RemarkWord
+          :word="remarkWord"
+          :selectPoS="selectPoS"
+          @back-search="backSearch"
+        />
       </div>
     </div>
   </div>
@@ -102,7 +104,8 @@ export default {
     margin: 16px 0px;
   }
 
-  .result, .remark {
+  .result,
+  .remark {
     width: calc(100% - 16px);
     margin: 16px 8px 0px 8px;
     &-header {

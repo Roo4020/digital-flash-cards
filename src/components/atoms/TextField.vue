@@ -24,14 +24,11 @@ export default {
 
 <style lang="scss" scoped>
 input[type="text"] {
-    min-width: 120px;
-    max-width: 200px;
-    height: 30px;
+    height: 36px;
     font-size: 24px;
-    flex: auto;
-    text-align: center;
     border: none;
     border-bottom: 1px solid gray;
+    padding: 0px 8px;
     outline: none;
 }
 </style>
