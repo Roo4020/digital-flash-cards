@@ -3,11 +3,11 @@
     <div class="search">
       <div class="title">検索</div>
       <SearchBox
-        :languageList="languageList"
-        :language="selectLanguage"
-        :keyWord="keyWord"
-        @shift-language="changeLanguage"
-        @change-key-word="changeKeyWord"
+        :data="languageList"
+        :select="selectLanguage"
+        :word="keyWord"
+        @select-value="changeLanguage"
+        @change-value="changeKeyWord"
       />
       <div class="result" v-if="searching">
         <div class="result-header">検索結果 {{ hitWordList.length }}件</div>

@@ -2,11 +2,11 @@
   <div class="search-box">
     <SelectBox
       class="left"
-      :value="language"
-      :data="languageList"
-      @change-value="shiftLanguage"
+      :value="select"
+      :data="data"
+      @change-value="selectValue"
     />
-    <TextField class="right" :value="keyWord" @change-value="changeKeyWord" />
+    <TextField class="right" :value="word" @change-value="changeValue" />
   </div>
 </template>
 
@@ -21,16 +21,16 @@ export default {
     SelectBox,
   },
   props: {
-    languageList: Array,
-    language: String,
-    keyWord: String,
+    data: Array,
+    select: String,
+    word: String,
   },
   methods: {
-      shiftLanguage(value) {
-          this.$emit("shift-language", value);
+      selectValue(value) {
+          this.$emit("select-value", value);
       },
-      changeKeyWord(value) {
-          this.$emit("change-key-word", value);
+      changeValue(value) {
+          this.$emit("change-value", value);
       },
   },
 };
