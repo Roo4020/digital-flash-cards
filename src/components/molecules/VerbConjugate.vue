@@ -3,7 +3,7 @@
     <div class="title">活用表</div>
     <div :class="['table', setClassOpen]">
       <div class="table-row" v-for="(item, index) in subjectList" :key="index">
-        <div class="table-row-subject">{{ item }}</div>
+        <div class="table-row-subject">{{ item.label }}</div>
         <div class="table-row-verb">{{ target.conjugationList[index] }}</div>
       </div>
     </div>
