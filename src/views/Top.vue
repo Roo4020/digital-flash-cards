@@ -1,17 +1,17 @@
 <template>
   <div class="top">
     <div class="title">Flash Cards</div>
-    <MenuTable />
+    <TopTable />
   </div>
 </template>
 
 <script>
-import MenuTable from "@/components/organisms/MenuTable.vue";
+import TopTable from "@/components/molecules/TopTable.vue";
 
 export default {
   name: "Top",
   components: {
-    MenuTable,
+    TopTable,
   },
 };
 </script>
