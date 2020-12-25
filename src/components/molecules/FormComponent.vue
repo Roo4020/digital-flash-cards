@@ -55,41 +55,35 @@ export default {
 <style lang="scss" scoped>
 .form {
   width: 100%;
+  height: 36px;
   display: grid;
   padding: 0px 8px;
   &-label {
-    grid-area: label;
     text-align: end;
-  }
-  &-input {
-    grid-area: input;
   }
 
   .correct {
-      border: 1px solid green;
+    border: 1px solid green;
   }
-  .wrong, .error {
-      border: 1px solid red;
+  .wrong,
+  .error {
+    border: 1px solid red;
   }
 }
 
 .normal {
-  grid-template:
-    "label input" 36px
-    / 104px minmax(60px, 1fr);
-    gap: 8px;
-    .form-label {
-      font-size: 24px;
-    }
+  grid-template-columns: 104px minmax(60px, 1fr);
+  column-gap: 8px;
+  .form-label {
+    font-size: 24px;
+  }
 }
 
 .mini {
-  grid-template:
-    "label input" 36px
-    / 56px minmax(60px, 1fr);
-    gap: 8px;
-    .form-label {
-      font-size: 20px;
-    }
+  grid-template-columns: 56px minmax(60px, 1fr);
+  column-gap: 8px;
+  .form-label {
+    font-size: 20px;
+  }
 }
 </style>
