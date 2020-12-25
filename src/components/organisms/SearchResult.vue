@@ -1,25 +1,52 @@
 <template>
   <div class="result-table">
     <div class="result-table-entry">
-      <div class="result-table-entry-label">単語</div>
-      <div class="result-table-entry-label">意味</div>
+      <div
+        class="result-table-entry-label"
+        v-for="(rowItem, index) in searchResultRowList"
+        :key="index"
+      >
+        {{ rowItem.label }}
+      </div>
     </div>
     <div class="result-table-content">
-      <SearchHitWord v-for="(hit, index) in hitWordList" :key="index" :hit="hit" @click-word="clickHitWord" />
+      <RowComponent
+        v-for="(hit, index) in hitWordList"
+        :key="index"
+        :class="setClassRepresentative(hit)"
+        :data="hit"
+        :rowList="searchResultRowList"
+        classRole="hitWord"
+        @click="clickHitWord(hit)"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import SearchHitWord from "@/components/molecules/SearchHitWord.vue";
+import RowComponent from "@/components/molecules/RowComponent.vue";
+
+import { SEARCH_RESULT_ROW_LIST } from "@/mixins/rowDataList.js";
 
 export default {
   name: "SearchResult",
   components: {
-      SearchHitWord,
+    RowComponent,
   },
   props: {
     hitWordList: Object,
+  },
+  data() {
+    return {
+      searchResultRowList: SEARCH_RESULT_ROW_LIST,
+    };
+  },
+  computed: {
+    setClassRepresentative() {
+      return function (hit) {
+        return hit.representative ? "representative" : "";
+      };
+    },
   },
   methods: {
     clickHitWord(hit) {
@@ -49,6 +76,16 @@ export default {
     overflow-x: scroll;
     overflow-y: scroll;
     white-space: nowrap;
+    .representative {
+      :first-child {
+        &::after {
+          content: "＊";
+          font-size: 10px;
+          position: relative;
+          top: -16px;
+        }
+      }
+    }
   }
 }
 </style>

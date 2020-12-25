@@ -1,14 +1,15 @@
 <template>
-  <div class="remark-word">
-    <div class="remark-word-content">
-      <div :class="['remark-word-content-top', setClassRepresentative]">
+  <div class="word-detail">
+    <div class="word-detail-content">
+      <div :class="['word-detail-content-top', setClassRepresentative]">
         {{ word.word }}
       </div>
-      <EntryOfRemark
-        v-for="(item, index) in entryList"
+      <RowComponent
+        v-for="(item, index) in wordDetailList"
         :key="index"
-        :word="word"
-        :entry="item"
+        :data="item"
+        :rowList="wordDetailRowList"
+        classRole="wordDetail"
       />
       <VerbConjugate v-if="selectPoS === 1" :show="true" :target="word" />
     </div>
@@ -17,16 +18,17 @@
 </template>
 
 <script>
-import EntryOfRemark from "@/components/molecules/EntryOfRemark.vue";
+import RowComponent from "@/components/molecules/RowComponent.vue";
 import VerbConjugate from "@/components/molecules/VerbConjugate.vue";
 import CommonButton from "@/components/atoms/CommonButton.vue";
 
 import { FORM_LIST } from "@/mixins/formList.js";
+import { WORD_DETAIL_ROW_LIST } from "@/mixins/rowDataList.js";
 
 export default {
-  name: "RemarkWord",
+  name: "WordDetail",
   components: {
-    EntryOfRemark,
+    RowComponent,
     VerbConjugate,
     CommonButton,
   },
@@ -37,13 +39,22 @@ export default {
   data() {
     return {
       formList: FORM_LIST,
+      wordDetailRowList: WORD_DETAIL_ROW_LIST,
     };
   },
   computed: {
-    entryList() {
-      return this.formList[this.selectPoS].filter(function (item) {
+    wordDetailList() {
+      const filteredFormList =  this.formList[this.selectPoS].filter(item => {
         return item.keyName !== "word" && item.keyName !== "representative" && item.keyName !== "conjugationList";
       });
+      const list = [];
+      for (let i in filteredFormList) {
+        list[i] = {
+          ...filteredFormList[i],
+          value: this.word[filteredFormList[i].keyName],
+        };
+      }
+      return list;
     },
     setClassRepresentative() {
       return this.word.representative ? "representative" : "";
@@ -58,7 +69,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.remark-word {
+.word-detail {
   width: 100%;
   text-align: center;
   &-content {

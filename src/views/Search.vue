@@ -11,10 +11,10 @@
       />
       <div class="result" v-if="searching">
         <div class="result-header">検索結果 {{ hitWordList.length }}件</div>
-        <SearchResult :hitWordList="hitWordList" @click-word="showDetails" />
+        <SearchResult :hitWordList="hitWordList" @click-word="showDetail" />
       </div>
-      <div class="remark" v-else>
-        <RemarkWord
+      <div class="detail" v-else>
+        <WordDetail
           :word="remarkWord"
           :selectPoS="selectPoS"
           @back-search="backSearch"
@@ -27,14 +27,14 @@
 <script>
 import SearchBox from "@/components/molecules/SearchBox.vue";
 import SearchResult from "@/components/organisms/SearchResult.vue";
-import RemarkWord from "@/components/organisms/RemarkWord.vue";
+import WordDetail from "@/components/organisms/WordDetail.vue";
 
 export default {
   name: "Search",
   components: {
     SearchBox,
     SearchResult,
-    RemarkWord,
+    WordDetail,
   },
   data() {
     return {
@@ -80,7 +80,7 @@ export default {
     changeKeyWord(value) {
       this.keyWord = value;
     },
-    showDetails(hit) {
+    showDetail(hit) {
       this.remarkWord = hit;
       this.searching = false;
     },
@@ -105,7 +105,7 @@ export default {
   }
 
   .result,
-  .remark {
+  .detail {
     width: calc(100% - 16px);
     margin: 16px 8px 0px 8px;
     &-header {
