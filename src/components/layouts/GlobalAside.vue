@@ -3,7 +3,7 @@
     <div class="aside">
       <div class="aside-header">
         <div class="aside-header-cross" @click="shiftAside">
-          <img src="@/assets/icon/aside_close.svg" />
+          <img src="@/assets/icon/clear-black.svg" />
         </div>
       </div>
       <div class="aside-content">

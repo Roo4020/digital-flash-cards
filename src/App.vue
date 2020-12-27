@@ -8,6 +8,7 @@
     </div>
     <router-view v-else />
     <GlobalAside />
+    <Modal v-show="$store.state.modal.isOpening" />
   </div>
 </template>
 
@@ -17,6 +18,8 @@ import PartOfSpeech from "@/components/layouts/PartOfSpeech.vue";
 import GlobalAside from "@/components/layouts/GlobalAside.vue";
 import GlobalFooter from "@/components/layouts/GlobalFooter.vue";
 
+import Modal from "@/components/organisms/Modal/index.vue";
+
 export default {
   name: "App",
   components: {
@@ -24,6 +27,7 @@ export default {
     PartOfSpeech,
     GlobalAside,
     GlobalFooter,
+    Modal,
   },
   created() {
     this.$store.dispatch("getWordList");
