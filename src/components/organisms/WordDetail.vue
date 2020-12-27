@@ -44,8 +44,12 @@ export default {
   },
   computed: {
     wordDetailList() {
-      const filteredFormList =  this.formList[this.selectPoS].filter(item => {
-        return item.keyName !== "word" && item.keyName !== "representative" && item.keyName !== "conjugationList";
+      const filteredFormList = this.formList[this.selectPoS].filter((item) => {
+        return (
+          item.keyName !== "word" &&
+          item.keyName !== "representative" &&
+          item.keyName !== "conjugationList"
+        );
       });
       const list = [];
       for (let i in filteredFormList) {

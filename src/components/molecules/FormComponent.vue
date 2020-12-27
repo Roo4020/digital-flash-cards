@@ -80,10 +80,11 @@ export default {
 }
 
 .mini {
-  grid-template-columns: 56px minmax(60px, 1fr);
+  grid-template-columns: 80px minmax(60px, 1fr);
   column-gap: 8px;
   .form-label {
-    font-size: 20px;
+    font-size: 18px;
+    line-height: 36px;
   }
 }
 </style>

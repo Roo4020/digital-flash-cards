@@ -128,6 +128,7 @@ export default {
     text-align: center;
     border: 4px solid black;
     margin-top: 20px !important;
+    margin-bottom: 20px !important;
     margin: 0 auto;
     overflow-x: auto;
     overflow-y: hidden;
@@ -142,7 +143,8 @@ export default {
       "form correct" auto
       ".... ......." 4px
       / 1fr auto;
-    gap: 16px;
+    column-gap: 8px;
+    row-gap: 16px;
     margin: 0 auto;
     overflow-x: scroll;
     .form {
