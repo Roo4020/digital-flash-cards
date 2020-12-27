@@ -13,6 +13,7 @@ const vocabulary = {
       "prepositionList",
       "conjunctionList"
     ],
+    currentWordAddress: {pos: NaN, index: NaN},
   },
 
   getters: {
@@ -25,6 +26,18 @@ const vocabulary = {
       return function (id) {
         return state.vocabularyList[id].filter(word => word.representative);
       }
+    },
+  },
+
+  mutations: {
+    setVocabularyList(state, payload) {
+      state.vocabularyList[payload.key] = payload.data;
+    },
+    setCurrentWordAddress(state, payload) {
+      state.currentWordAddress = payload;
+    },
+    initCurrentWordAddress(state) {
+      state.currentWordAddress = {pos: NaN, index: NaN};
     },
   },
 
@@ -49,13 +62,27 @@ const vocabulary = {
       state,
       dispatch
     }, payload) {
-      let list = state.vocabularyList[payload.selectPoS];
+      let wordList = state.vocabularyList[payload.selectPoS];
       const newWord = {};
       for (let i in payload.form) {
         newWord[payload.form[i].keyName] = payload.append[i];
       }
-      list.push(newWord);
-      dispatch("updateWordList", {key: payload.selectPoS, data: list});
+      wordList.push(newWord);
+      dispatch("updateWordList", {
+        key: payload.selectPoS,
+        data: wordList
+      });
+    },
+    async deleteWord({state, commit, dispatch}) {
+      const selectPoS = state.currentWordAddress.pos;
+      let wordList = state.vocabularyList[selectPoS];
+      wordList.splice(state.currentWordAddress.index, 1);
+      await dispatch("updateWordList", {
+        key: selectPoS,
+        data: wordList
+      });
+
+      commit("initCurrentWordAddress");
     },
     async updateWordList({
       state,
@@ -67,12 +94,6 @@ const vocabulary = {
         value: payload.data,
       });
       dispatch("getWordList");
-    },
-  },
-
-  mutations: {
-    setVocabularyList(state, payload) {
-      state.vocabularyList[payload.key] = payload.data;
     },
   },
 };

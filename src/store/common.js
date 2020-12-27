@@ -5,6 +5,7 @@ const common = {
         selectPoS: 0,
         translate: 0, //0が「独→日」、1が「日→独」
         showAside: false,
+        isSearching: true,
     },
 
     mutations: {
@@ -16,6 +17,9 @@ const common = {
         },
         shiftAside(state) {
             state.showAside = !state.showAside;
+        },
+        changeIsSearching(state, payload) {
+            state.isSearching = payload;
         },
     },
 };

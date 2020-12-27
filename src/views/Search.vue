@@ -9,7 +9,7 @@
         @select-value="changeLanguage"
         @change-value="changeKeyWord"
       />
-      <div class="result" v-if="searching">
+      <div class="result" v-if="isSearching">
         <div class="result-header">検索結果 {{ hitWordList.length }}件</div>
         <SearchResult :hitWordList="hitWordList" @click-word="showDetail" />
       </div>
@@ -43,12 +43,14 @@ export default {
       selectLanguage: "ドイツ語",
       keyWord: "",
       remarkWord: {},
-      searching: true,
     };
   },
   computed: {
     selectPoS() {
       return this.$store.state.common.selectPoS;
+    },
+    isSearching() {
+      return this.$store.state.common.isSearching;
     },
     targetList() {
       return this.$store.getters.targetList(this.selectPoS);
@@ -57,23 +59,30 @@ export default {
       const keyWord = this.keyWord;
       if (keyWord === "") {
         return [];
-      } else if (this.selectLanguage === "ドイツ語") {
-        return this.targetList.filter(function (item) {
-          return item.word.indexOf(keyWord) !== -1;
-        });
       } else {
-        return this.targetList.filter(function (item) {
-          return item.meaning.indexOf(keyWord) !== -1;
-        });
+        const key = this.selectLanguage === "ドイツ語" ? "word" : "meaning";
+        return this.setHitWordList(keyWord, key);
       }
     },
   },
   watch: {
     selectPoS() {
-      this.searching = true;
+      this.$store.commit("changeIsSearching", true);
     },
   },
   methods: {
+    setHitWordList(keyWord, key) {
+      const list = [];
+      for (let i in this.targetList) {
+        if (this.targetList[i][key].indexOf(keyWord) !== -1) {
+          list.push({
+            ...this.targetList[i],
+            index: i,
+          });
+        }
+      }
+      return list;
+    },
     changeLanguage(value) {
       this.selectLanguage = value;
     },
@@ -82,10 +91,10 @@ export default {
     },
     showDetail(hit) {
       this.remarkWord = hit;
-      this.searching = false;
+      this.$store.commit("changeIsSearching", false);
     },
     backSearch() {
-      this.searching = true;
+      this.$store.commit("changeIsSearching", true);
     },
   },
 };

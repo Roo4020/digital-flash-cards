@@ -13,7 +13,10 @@
       />
       <VerbConjugate v-if="selectPoS === 1" :show="true" :target="word" />
     </div>
-    <CommonButton label="戻る" @click-event="backSearch" />
+    <div class="word-detail-footer">
+      <CommonButton label="削除" @click-event="confirmDeleteWord" />
+      <CommonButton label="戻る" @click-event="backSearch" />
+    </div>
   </div>
 </template>
 
@@ -65,6 +68,10 @@ export default {
     },
   },
   methods: {
+    confirmDeleteWord() {
+      this.$store.commit("setCurrentWordAddress", {pos: this.selectPoS, index: this.word.index});
+      this.$store.dispatch("setModal", "ConfirmDelete");
+    },
     backSearch() {
       this.$emit("back-search");
     },
@@ -99,6 +106,12 @@ export default {
       position: relative;
       top: -16px;
     }
+  }
+
+  &-footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
   }
 }
 </style>
