@@ -27,7 +27,7 @@ export default {
   props: {
     item: Object,
     id: Number,
-    value: String,
+    value: [String, Boolean],
     validate: Array,
     size: String,
   },
