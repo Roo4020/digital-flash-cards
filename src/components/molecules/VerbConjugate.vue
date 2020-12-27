@@ -2,7 +2,7 @@
   <div :class="['conjugation', setClassBackBlack]">
     <div class="title">活用表</div>
     <div :class="['table', setClassOpen]">
-      <div class="table-row" v-for="(item, index) in subjectList" :key="index">
+      <div class="table-row" v-for="(item, index) in conjugateList" :key="index">
         <div class="table-row-subject">{{ item.label }}</div>
         <div class="table-row-verb">{{ target.conjugationList[index] }}</div>
       </div>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { SUBJECT_LIST } from "@/mixins/subjectList.js";
+import { CONJUGATE_LIST } from "@/mixins/conjugateList.js";
 
 export default {
   name: "VerbConjugate",
@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      subjectList: SUBJECT_LIST,
+      conjugateList: CONJUGATE_LIST,
     };
   },
   computed: {
@@ -65,7 +65,7 @@ export default {
   }
 
   .open {
-    height: 120px;
+    height: 180px;
     transition: all 0.4s ease;
   }
 }

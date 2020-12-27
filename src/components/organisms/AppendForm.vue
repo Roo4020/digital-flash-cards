@@ -9,21 +9,21 @@
       :value="appendList[index]"
       :validate="validateList"
       size="normal"
-      @change-value="appendValue"
+      @change-value="editValue"
     />
     </div>
     <div class="append-form-conjugation" v-if="selectPoS === 1">
       <div class="label">活用:</div>
       <div class="input">
         <FormComponent
-          v-for="(item, index) in subjectList"
+          v-for="(item, index) in conjugateList"
           :key="index"
           :item="item"
           :id="index"
           :value="appendList[3][index]"
           :validate="validateList[3]"
           size="mini"
-          @change-value="appendConjugation"
+          @change-value="editConjugation"
         />
       </div>
     </div>
@@ -34,11 +34,11 @@
       :value="appendList[form.length - 1]"
       :validate="validateList"
       size="normal"
-      @change-value="appendValue"
+      @change-value="editValue"
     />
     </div>  
-    <div class="message">{{ message }}</div>
-    <CommonButton label="追加" @click-event="buttonEvent" />
+    <div v-if="message !== ''" class="message">{{ message }}</div>
+    <CommonButton label="追加" @click-event="appendValue" />
   </div>
 </template>
 
@@ -46,7 +46,7 @@
 import FormComponent from "@/components/molecules/FormComponent.vue";
 import CommonButton from "@/components/atoms/CommonButton.vue";
 
-import { SUBJECT_LIST } from "@/mixins/subjectList.js";
+import { CONJUGATE_LIST } from "@/mixins/conjugateList.js";
 
 export default {
   name: "AppendForm",
@@ -60,7 +60,7 @@ export default {
   },
   data() {
     return {
-      subjectList: SUBJECT_LIST,
+      conjugateList: CONJUGATE_LIST,
 
       appendList: [],
       validateList: [],
@@ -90,16 +90,15 @@ export default {
     },
   },
   methods: {
-    appendValue(value, id) {
+    editValue(value, id) {
       this.appendList[id] = value;
     },
-    appendConjugation(value, id) {
+    editConjugation(value, id) {
       this.appendList[3][id] = value;
     },
-    async buttonEvent() {
+    async appendValue() {
       if (!(await this.checkValidate())) {
         this.message = "適切でない項目があります";
-        console.log(this.validateList);
       } else {
         this.message = "追加できました";
         this.$store.dispatch("appendWord", {
@@ -107,7 +106,6 @@ export default {
           form: this.form,
           selectPoS: this.selectPoS,
         });
-        console.log(this.$store.getters.targetList(this.selectPoS));
         this.resetArray();
       }
     },
@@ -122,7 +120,7 @@ export default {
       for (let i = 0; i < this.form.length - 1; i++) {
         const exp = this.form[i].validate;
         if (this.selectPoS === 1 && i === 3) {
-          for (let j = 0; j < 4; j++) {
+          for (let j = 0; j < 6; j++) {
             this.validateList[3][j] = this.validate(exp, this.appendList[3][j]);
             clear = clear && this.validateList[3][j] === "clear" ? true : false;
           }
