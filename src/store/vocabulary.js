@@ -49,7 +49,7 @@ const vocabulary = {
       state,
       dispatch
     }, payload) {
-      const list = state.vocabularyList[payload.selectPoS];
+      let list = state.vocabularyList[payload.selectPoS];
       const newWord = {};
       for (let i in payload.form) {
         newWord[payload.form[i].keyName] = payload.append[i];
@@ -57,13 +57,13 @@ const vocabulary = {
       list.push(newWord);
       dispatch("updateWordList", {key: payload.selectPoS, data: list});
     },
-    updateWordList({
+    async updateWordList({
       state,
       dispatch
     }, payload) {
       const docId = state.docLabelList[payload.key];
       const wordRef = firebase.firestore().collection('vocabulary').doc(docId);
-      wordRef.update({
+      await wordRef.update({
         value: payload.data,
       });
       dispatch("getWordList");
