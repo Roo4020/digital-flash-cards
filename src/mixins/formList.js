@@ -25,7 +25,7 @@ export const FORM_LIST = [
             validate: /^[a-zA-ZäöüÄÖÜß!-/:-@¥[-`{-~]*$/,
         },
         {
-            label: "代表",
+            label: "日→独",
             keyName: "representative",
             data: [{label: "適用", value: true}, {label: "適用外", value: false}],
             formType: "RadioButton",
@@ -56,7 +56,7 @@ export const FORM_LIST = [
             validate: /^[a-zA-ZäöüÄÖÜß]+$/,
         },
         {
-            label: "代表",
+            label: "日→独",
             keyName: "representative",
             data: [{label: "適用", value: true}, {label: "適用外", value: false}],
             formType: "RadioButton",
@@ -82,7 +82,7 @@ export const FORM_LIST = [
             validate: /^[^\x20-\x7e]+$/,
         },
         {
-            label: "代表",
+            label: "日→独",
             keyName: "representative",
             data: [{label: "適用", value: true}, {label: "適用外", value: false}],
             formType: "RadioButton",
@@ -108,7 +108,7 @@ export const FORM_LIST = [
             validate: /^[^\x20-\x7e]+$/,
         },
         {
-            label: "代表",
+            label: "日→独",
             keyName: "representative",
             data: [{label: "適用", value: true}, {label: "適用外", value: false}],
             formType: "RadioButton",
@@ -134,10 +134,10 @@ export const FORM_LIST = [
             validate: /^[^\x20-\x7e]+$/,
         },
         {
-            label: "代表",
+            label: "日→独",
             keyName: "representative",
             data: [{label: "適用", value: true}, {label: "適用外", value: false}],
             formType: "RadioButton",
         },
     ],
-]
+];
