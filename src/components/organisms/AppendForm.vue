@@ -100,12 +100,13 @@ export default {
       if (!(await this.checkValidate())) {
         this.message = "適切でない項目があります";
       } else {
-        this.message = "追加できました";
+        this.message = "";
         this.$store.dispatch("appendWord", {
           append: this.appendList,
           form: this.form,
           selectPoS: this.selectPoS,
         });
+        alert("追加できました");
         this.resetArray();
       }
     },
