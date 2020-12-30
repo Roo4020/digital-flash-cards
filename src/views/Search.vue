@@ -61,7 +61,7 @@ export default {
         return [];
       } else {
         const key = this.selectLanguage === "ドイツ語" ? "word" : "meaning";
-        return this.setHitWordList(keyWord, key);
+        return this.getHitWordList(keyWord, key);
       }
     },
   },
@@ -71,7 +71,7 @@ export default {
     },
   },
   methods: {
-    setHitWordList(keyWord, key) {
+    getHitWordList(keyWord, key) {
       const list = [];
       for (let i in this.targetList) {
         if (this.targetList[i][key].indexOf(keyWord) !== -1) {
