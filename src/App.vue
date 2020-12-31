@@ -31,6 +31,7 @@ export default {
   },
   created() {
     this.$store.dispatch("getWordList");
+    this.$store.dispatch("closeModal");
   },
 };
 </script>
