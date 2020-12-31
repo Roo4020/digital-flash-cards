@@ -6,13 +6,6 @@ const vocabulary = {
 
   state: {
     vocabularyList: [],
-    docLabelList: [
-      "nounList",
-      "verbList",
-      "adjectiveList",
-      "prepositionList",
-      "conjunctionList"
-    ],
     currentWordAddress: {pos: NaN, index: NaN},
   },
 
@@ -85,10 +78,9 @@ const vocabulary = {
       commit("initCurrentWordAddress");
     },
     async updateWordList({
-      state,
       dispatch
     }, payload) {
-      const docId = state.docLabelList[payload.key];
+      const docId = getDocLabel(payload.key);
       const wordRef = firebase.firestore().collection('vocabulary').doc(docId);
       await wordRef.update({
         value: payload.data,
@@ -99,3 +91,14 @@ const vocabulary = {
 };
 
 export default vocabulary;
+
+function getDocLabel(pos) {
+  const docLabelList = [
+    "nounList",
+    "verbList",
+    "adjectiveList",
+    "prepositionList",
+    "conjunctionList"
+  ];
+  return docLabelList[pos];
+}
