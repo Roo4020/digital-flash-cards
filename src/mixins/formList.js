@@ -77,7 +77,7 @@ export const FORM_LIST = [
         {
             label: "種類",
             keyName: "distinction",
-            data: ["形容詞", "副詞"],
+            data: ["一般動詞", "分離動詞", "非分離動詞", "助動詞"],
             formType: "SelectBox",
             validate: /^[^\x20-\x7e]+$/,
         },

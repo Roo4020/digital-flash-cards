@@ -1,5 +1,5 @@
 <template>
-  <div :class="['form', size]">
+  <div :class="['form', setClassSize]">
     <div class="form-label">{{ item.label }}:</div>
     <component
       :class="['form-input', setBorderColor(id)]"
@@ -16,6 +16,7 @@
 import TextField from "@/components/atoms/TextField.vue";
 import SelectBox from "@/components/atoms/SelectBox.vue";
 import RadioButton from "@/components/atoms/RadioButton.vue";
+import CheckBox from "@/components/atoms/CheckBox.vue";
 
 export default {
   name: "FormComponent",
@@ -23,15 +24,24 @@ export default {
     TextField,
     SelectBox,
     RadioButton,
+    CheckBox,
   },
   props: {
     item: Object,
     id: Number,
-    value: [String, Boolean],
-    validate: Array,
+    value: [String, Boolean, Array],
+    validate: {
+      type: Array,
+      default: function () {
+        return [];
+      },
+    },
     size: String,
   },
   computed: {
+    setClassSize() {
+      return `size-${this.size}`;
+    },
     setBorderColor() {
       const validate = this.validate;
       return function (id) {
@@ -55,11 +65,12 @@ export default {
 <style lang="scss" scoped>
 .form {
   width: 100%;
-  height: 36px;
   display: grid;
   padding: 0px 8px;
   &-label {
-    text-align: end;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 
   .correct {
@@ -71,7 +82,8 @@ export default {
   }
 }
 
-.normal {
+.size-L {
+  height: auto;
   grid-template-columns: 104px minmax(60px, 1fr);
   column-gap: 8px;
   .form-label {
@@ -79,7 +91,17 @@ export default {
   }
 }
 
-.mini {
+.size-M {
+  height: 36px;
+  grid-template-columns: 104px minmax(60px, 1fr);
+  column-gap: 8px;
+  .form-label {
+    font-size: 24px;
+  }
+}
+
+.size-S {
+  height: 36px;
   grid-template-columns: 80px minmax(60px, 1fr);
   column-gap: 8px;
   .form-label {

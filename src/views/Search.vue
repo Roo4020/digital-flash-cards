@@ -1,7 +1,12 @@
 <template>
   <div class="page">
     <div class="search">
-      <div class="title">検索</div>
+      <div class="search-header">
+        <div class="title">検索</div>
+        <div class="setting" @click="editFilterSetting">
+          <img src="@/assets/icon/settings_black.svg" />
+        </div>
+      </div>
       <SearchBox
         :data="languageList"
         :select="selectLanguage"
@@ -96,6 +101,9 @@ export default {
     backSearch() {
       this.$store.commit("changeIsSearching", true);
     },
+    editFilterSetting() {
+      this.$store.dispatch("setModal", "EditFilterSetting");
+    },
   },
 };
 </script>
@@ -105,12 +113,23 @@ export default {
   width: 60%;
   min-width: 375px;
   margin: 0 auto;
-  .title {
+  &-header {
     width: 100%;
-    font-size: 32px;
-    font-weight: bold;
-    text-align: center;
     margin: 16px 0px;
+    position: relative;
+    .title {
+      width: 100%;
+      font-size: 32px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .setting {
+      transform: scale(1.8, 1.8);
+      position: absolute;
+      top: 16px;
+      right: 32px;
+      cursor: pointer;
+    }
   }
 
   .result,

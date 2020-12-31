@@ -6,11 +6,13 @@
 
 <script>
 import ConfirmDelete from "@/components/organisms/Modal/ConfirmDelete.vue";
+import EditFilterSetting from "@/components/organisms/Modal/EditFilterSetting.vue";
 
 export default {
   name: "Modal",
   components: {
     ConfirmDelete,
+    EditFilterSetting,
   },
   methods: {
     closeModal() {

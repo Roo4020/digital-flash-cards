@@ -86,6 +86,6 @@ export default {
 }
 
 .size-L {
-    height: 640px;
+    height: 540px;
 }
 </style>

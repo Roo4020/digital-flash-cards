@@ -8,7 +8,7 @@
       :id="index"
       :value="appendList[index]"
       :validate="validateList"
-      size="normal"
+      size="M"
       @change-value="editValue"
     />
     </div>
@@ -22,7 +22,7 @@
           :id="index"
           :value="appendList[3][index]"
           :validate="validateList[3]"
-          size="mini"
+          size="S"
           @change-value="editConjugation"
         />
       </div>
@@ -33,7 +33,7 @@
       :id="form.length - 1"
       :value="appendList[form.length - 1]"
       :validate="validateList"
-      size="normal"
+      size="M"
       @change-value="editValue"
     />
     </div>  

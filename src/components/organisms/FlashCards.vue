@@ -7,7 +7,7 @@
         :id="index"
         :value="submissionList[index]"
         :validate="checkCorrectList"
-        size="normal"
+        size="M"
         @change-value="changeSubmission"
       />
       <div
