@@ -4,6 +4,7 @@ const filter = {
     state: {
         nounFilter: [{
                 label: "性",
+                keyName: "distinction",
                 data: [{
                     label: "男性",
                     value: "男性"
@@ -19,6 +20,7 @@ const filter = {
             },
             {
                 label: "日→独",
+                keyName: "representative",
                 data: [{
                     label: "適用",
                     value: true
@@ -32,6 +34,7 @@ const filter = {
         ],
         verbFilter: [{
                 label: "種類",
+                keyName: "distinction",
                 data: [{
                     label: "一般動詞",
                     value: "一般動詞"
@@ -50,6 +53,7 @@ const filter = {
             },
             {
                 label: "日→独",
+                keyName: "representative",
                 data: [{
                     label: "適用",
                     value: true
@@ -63,6 +67,7 @@ const filter = {
         ],
         adjectiveFilter: [{
                 label: "種類",
+                keyName: "distinction",
                 data: [{
                     label: "形容詞",
                     value: "形容詞"
@@ -75,6 +80,7 @@ const filter = {
             },
             {
                 label: "日→独",
+                keyName: "representative",
                 data: [{
                     label: "適用",
                     value: true
@@ -88,6 +94,7 @@ const filter = {
         ],
         prepositionFilter: [{
                 label: "格支配",
+                keyName: "case",
                 data: [{
                     label: "２格",
                     value: "２格"
@@ -106,6 +113,7 @@ const filter = {
             },
             {
                 label: "日→独",
+                keyName: "representative",
                 data: [{
                     label: "適用",
                     value: true
@@ -119,6 +127,7 @@ const filter = {
         ],
         conjunctionFilter: [{
                 label: "種類",
+                keyName: "distinction",
                 data: [{
                     label: "並列",
                     value: "並列"
@@ -134,6 +143,7 @@ const filter = {
             },
             {
                 label: "日→独",
+                keyName: "representative",
                 data: [{
                     label: "適用",
                     value: true

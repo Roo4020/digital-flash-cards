@@ -15,8 +15,13 @@
         @change-value="changeKeyWord"
       />
       <div class="result" v-if="isSearching">
-        <div class="result-header">検索結果 {{ hitWordList.length }}件</div>
-        <SearchResult :hitWordList="hitWordList" @click-word="showDetail" />
+        <div class="result-header">
+          検索結果 {{ searchResultList.length }}件
+        </div>
+        <SearchResult
+          :searchResultList="searchResultList"
+          @click-word="showDetail"
+        />
       </div>
       <div class="detail" v-else>
         <WordDetail
@@ -47,6 +52,7 @@ export default {
 
       selectLanguage: "ドイツ語",
       keyWord: "",
+      searchResultList: [],
       remarkWord: {},
     };
   },
@@ -60,26 +66,40 @@ export default {
     targetList() {
       return this.$store.getters.targetList(this.selectPoS);
     },
-    hitWordList() {
-      const keyWord = this.keyWord;
-      if (keyWord === "") {
-        return [];
-      } else {
-        const key = this.selectLanguage === "ドイツ語" ? "word" : "meaning";
-        return this.getHitWordList(keyWord, key);
-      }
+    filterEnterList() {
+      return this.$store.getters.targetFilterList(this.selectPoS);
     },
+    hitOfKeyWord() {
+      const searchField =
+        this.selectLanguage === "ドイツ語" ? "word" : "meaning";
+      return this.getHitWordList(this.keyWord, searchField);
+    },
+  },
+  created() {
+    this.setSearchResult();
   },
   watch: {
     selectPoS() {
       this.$store.commit("changeIsSearching", true);
     },
+    filterEnterList: {
+      handler() {
+        this.setSearchResult();
+      },
+      deep: true,
+    },
+    hitOfKeyWord: {
+      handler() {
+        this.setSearchResult();
+      },
+      deep: true,
+    },
   },
   methods: {
-    getHitWordList(keyWord, key) {
+    getHitWordList(keyWord, field) {
       const list = [];
       for (let i in this.targetList) {
-        if (this.targetList[i][key].indexOf(keyWord) !== -1) {
+        if (this.targetList[i][field].indexOf(keyWord) !== -1) {
           list.push({
             ...this.targetList[i],
             index: i,
@@ -87,6 +107,31 @@ export default {
         }
       }
       return list;
+    },
+    async setSearchResult() {
+      this.searchResultList = await this.filteredHitWord();
+      console.log(this.searchResultList);
+    },
+    async filteredHitWord() {
+      let filteredList = [];
+      for (let i in this.hitOfKeyWord) {
+        if (await this.throughFilter(this.hitOfKeyWord[i])) {
+          filteredList.push(this.hitOfKeyWord[i]);
+        }
+      }
+      // console.log(filteredList);
+      return filteredList;
+    },
+    async throughFilter(word) {
+      let passFilter = true;
+      for (let i in this.filterEnterList) {
+        const value = word[this.filterEnterList[i].keyName];
+        const passValueList = this.filterEnterList[i].value;
+        passFilter =
+          await passFilter && passValueList.includes(value) ? true : false;
+      }
+      console.log(passFilter);
+      return passFilter;
     },
     changeLanguage(value) {
       this.selectLanguage = value;

@@ -11,7 +11,7 @@
     </div>
     <div class="result-table-content">
       <RowComponent
-        v-for="(hit, index) in hitWordList"
+        v-for="(hit, index) in searchResultList"
         :key="index"
         :class="setClassRepresentative(hit)"
         :data="hit"
@@ -34,7 +34,7 @@ export default {
     RowComponent,
   },
   props: {
-    hitWordList: Object,
+    searchResultList: Object,
   },
   data() {
     return {
