@@ -1,5 +1,5 @@
 const common = {
-    namespaced: false,
+    namespaced: true,
 
     state: {
         selectPoS: 0,

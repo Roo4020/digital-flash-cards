@@ -69,8 +69,8 @@ export default {
   },
   methods: {
     confirmDeleteWord() {
-      this.$store.commit("setCurrentWordAddress", {pos: this.selectPoS, index: this.word.index});
-      this.$store.dispatch("setModal", "ConfirmDelete");
+      this.$store.commit("vocabulary/setCurrentWordAddress", {pos: this.selectPoS, index: this.word.index});
+      this.$store.dispatch("modal/setModal", "ConfirmDelete");
     },
     backSearch() {
       this.$emit("back-search");

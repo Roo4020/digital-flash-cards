@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     closeModal() {
-      this.$store.dispatch("closeModal");
+      this.$store.dispatch("modal/closeModal");
     },
   },
 };

@@ -32,7 +32,7 @@
     <div class="top-arrow" @click="transTopOfPage">
       <img :src="require(`@/assets/icon/arrow_to_top.svg`)" />
     </div>
-    <div class="return-top" @click="transTop">トップに戻る</div>
+    <div class="return-top" @click="logOut">ログアウト</div>
   </div>
 </template>
 
@@ -41,7 +41,7 @@ export default {
   name: "GlobalFooter",
   methods: {
     transFlashCards(key) {
-      this.$store.commit("changeTranslate", key);
+      this.$store.commit("common/changeTranslate", key);
       this.$router.push("/translate");
     },
     transSearch() {
@@ -50,8 +50,8 @@ export default {
     transAppend() {
       this.$router.push("/append");
     },
-    transTop() {
-      this.$router.push("/");
+    logOut() {
+      this.$store.dispatch("auth/signOut");
     },
     transTopOfPage() {
       window.scrollTo({

@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     changePart(id) {
-      this.$store.commit("changeSelectPoS", id);
+      this.$store.commit("common/changeSelectPoS", id);
     },
   },
 };

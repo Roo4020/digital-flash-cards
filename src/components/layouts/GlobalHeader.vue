@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     shiftAside() {
-      this.$store.commit("shiftAside");
+      this.$store.commit("common/shiftAside");
     },
   },
 };

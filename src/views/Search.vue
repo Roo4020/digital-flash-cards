@@ -80,7 +80,7 @@ export default {
   },
   watch: {
     selectPoS() {
-      this.$store.commit("changeIsSearching", true);
+      this.$store.commit("common/changeIsSearching", true);
     },
     filterEnterList: {
       handler() {
@@ -110,7 +110,6 @@ export default {
     },
     async setSearchResult() {
       this.searchResultList = await this.filteredHitWord();
-      console.log(this.searchResultList);
     },
     async filteredHitWord() {
       let filteredList = [];
@@ -130,7 +129,6 @@ export default {
         passFilter =
           await passFilter && passValueList.includes(value) ? true : false;
       }
-      console.log(passFilter);
       return passFilter;
     },
     changeLanguage(value) {
@@ -141,13 +139,13 @@ export default {
     },
     showDetail(hit) {
       this.remarkWord = hit;
-      this.$store.commit("changeIsSearching", false);
+      this.$store.commit("common/changeIsSearching", false);
     },
     backSearch() {
-      this.$store.commit("changeIsSearching", true);
+      this.$store.commit("common/changeIsSearching", true);
     },
     editFilterSetting() {
-      this.$store.dispatch("setModal", "EditFilterSetting");
+      this.$store.dispatch("modal/setModal", "EditFilterSetting");
     },
   },
 };

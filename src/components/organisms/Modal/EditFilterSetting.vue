@@ -40,12 +40,12 @@ export default {
       return this.$store.state.common.selectPoS;
     },
     filterEnterList() {
-      return this.$store.getters.targetFilterList(this.selectPoS);
+      return this.$store.getters["filter/targetFilterList"];
     },
   },
   methods: {
     changeFilterSetting(value, id) {
-      this.$store.commit("changeSetting", {
+      this.$store.commit("filter/changeSetting", {
         id: id,
         value: value,
         selectPoS: this.selectPoS,
@@ -53,7 +53,7 @@ export default {
     },
     clearFilter() {
       for (let i in this.filterEnterList) {
-        this.$store.commit("changeSetting", {
+        this.$store.commit("filter/changeSetting", {
           id: i,
           value: [],
           selectPoS: this.selectPoS,
@@ -62,11 +62,8 @@ export default {
     },
     async completeFilter() {
       for (let i in this.filterEnterList) {
-        const completedFilterList = await this.$store.getters.getCompletedFilter(
-          i,
-          this.selectPoS
-        );
-        this.$store.commit("changeSetting", {
+        const completedFilterList = await this.$store.getters["filter/getCompletedFilter", i];
+        this.$store.commit("filter/changeSetting", {
           id: i,
           value: completedFilterList,
           selectPoS: this.selectPoS,

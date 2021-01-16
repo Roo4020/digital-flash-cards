@@ -2,23 +2,22 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 
 const vocabulary = {
-  namespaced: false,
+  namespaced: true,
 
   state: {
     vocabularyList: [],
-    currentWordAddress: {pos: NaN, index: NaN},
+    currentWordAddress: {
+      pos: NaN,
+      index: NaN
+    },
   },
 
   getters: {
-    targetList(state) {
-      return function (id) {
-        return state.vocabularyList[id];
-      }
+    targetList(state, getters, rootState) {
+      return state.vocabularyList[rootState.selectPoS];
     },
-    representativeTargetList(state) {
-      return function (id) {
-        return state.vocabularyList[id].filter(word => word.representative);
-      }
+    representativeTargetList(state, getters, rootState) {
+      return state.vocabularyList[rootState.selectPoS].filter(word => word.representative);
     },
   },
 
@@ -30,62 +29,58 @@ const vocabulary = {
       state.currentWordAddress = payload;
     },
     initCurrentWordAddress(state) {
-      state.currentWordAddress = {pos: NaN, index: NaN};
+      state.currentWordAddress = {
+        pos: NaN,
+        index: NaN
+      };
     },
   },
 
   actions: {
-    getWordList({
-      commit
-    }) {
+    getWordList(context) {
       firebase.firestore().collection('vocabulary').orderBy('id').get()
         .then((doc) => {
           doc.forEach(element => {
-            commit("setVocabularyList", {
+            context.commit("vocabulary/setVocabularyList", {
               key: element.data().id - 1,
               data: element.data().value
             });
-          })
+          });
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    appendWord({
-      state,
-      dispatch
-    }, payload) {
-      let wordList = state.vocabularyList[payload.selectPoS];
+    appendWord(context, payload) {
+      let wordList = context.state.vocabularyList[payload.selectPoS];
       const newWord = {};
       for (let i in payload.form) {
         newWord[payload.form[i].keyName] = payload.append[i];
       }
       wordList.push(newWord);
-      dispatch("updateWordList", {
+      context.dispatch("vocabulary/updateWordList", {
         key: payload.selectPoS,
         data: wordList
       });
     },
-    async deleteWord({state, commit, dispatch}) {
-      const selectPoS = state.currentWordAddress.pos;
-      let wordList = state.vocabularyList[selectPoS];
-      wordList.splice(state.currentWordAddress.index, 1);
-      await dispatch("updateWordList", {
+    async deleteWord(context) {
+      const selectPoS = context.state.currentWordAddress.pos;
+      let wordList = context.state.vocabularyList[selectPoS];
+      wordList.splice(context.state.currentWordAddress.index, 1);
+      await context.dispatch("vocabulary/updateWordList", {
         key: selectPoS,
         data: wordList
       });
 
-      commit("initCurrentWordAddress");
+      context.commit("vocabulary/initCurrentWordAddress");
     },
-    async updateWordList({
-      dispatch
-    }, payload) {
+    async updateWordList(context, payload) {
       const docId = getDocLabel(payload.key);
       const wordRef = firebase.firestore().collection('vocabulary').doc(docId);
       await wordRef.update({
         value: payload.data,
       });
-      dispatch("getWordList");
+      context.dispatch("vocabulary/getWordList");
     },
   },
 };

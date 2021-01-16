@@ -101,7 +101,7 @@ export default {
         this.message = "適切でない項目があります";
       } else {
         this.message = "";
-        this.$store.dispatch("appendWord", {
+        this.$store.dispatch("vocabulary/appendWord", {
           append: this.appendList,
           form: this.form,
           selectPoS: this.selectPoS,

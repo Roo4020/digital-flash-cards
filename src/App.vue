@@ -30,8 +30,9 @@ export default {
     Modal,
   },
   created() {
-    this.$store.dispatch("getWordList");
-    this.$store.dispatch("closeModal");
+    this.$store.dispatch("auth/onAuthChanged");
+    this.$store.dispatch("vocabulary/getWordList");
+    this.$store.dispatch("modal/closeModal");
   },
 };
 </script>

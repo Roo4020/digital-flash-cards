@@ -23,22 +23,15 @@
         </div>
       </div>
       <div class="aside-footer">
-        <div class="aside-footer-btn" @click="transTop">トップへ戻る</div>
+        <div class="aside-footer-btn" @click="logOut">ログアウト</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// import { ASIDE_MENU_LIST } from "@/mixins/asideMenuList.js";
-
 export default {
   name: "GlobalAside",
-  data() {
-    return {
-      // asideMenuList: ASIDE_MENU_LIST,
-    };
-  },
   computed: {
     showAside() {
       return this.$store.state.common.showAside;
@@ -50,7 +43,7 @@ export default {
   methods: {
     transFlashCards(key) {
       this.shiftAside();
-      this.$store.commit("changeTranslate", key);
+      this.$store.commit("common/changeTranslate", key);
       this.$router.push("/translate");
     },
     transSearch() {
@@ -61,12 +54,12 @@ export default {
       this.shiftAside();
       this.$router.push("/append");
     },
-    transTop() {
+    logOut() {
+      this.$store.dispatch("auth/signOut");
       this.shiftAside();
-      this.$router.push("/");
     },
     shiftAside() {
-      this.$store.commit("shiftAside");
+      this.$store.commit("common/shiftAside");
     },
   },
 };

@@ -35,8 +35,8 @@ export default {
     },
     targetList() {
       return this.translate === 0
-        ? this.$store.getters.targetList(this.selectPoS)
-        : this.$store.getters.representativeTargetList(this.selectPoS);
+        ? this.$store.getters["vocabulary/targetList"]
+        : this.$store.getters["vocabulary/representativeTargetList"];
     },
     question() {
       return this.translate === 0 ? "word" : "meaning";

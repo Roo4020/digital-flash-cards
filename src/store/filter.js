@@ -1,5 +1,5 @@
 const filter = {
-    namespaced: false,
+    namespaced: true,
 
     state: {
         nounFilter: [{
@@ -158,15 +158,13 @@ const filter = {
     },
 
     getters: {
-        targetFilterList(state) {
-            return function (pos) {
-                const filterList = getFilterList(pos);
+        targetFilterList(state, getters, rootState) {
+                const filterList = getFilterList(rootState.selectPoS);
                 return state[filterList];
-            };
         },
-        getCompletedFilter(state) {
-            return function (id, pos) {
-                const filterList = getFilterList(pos);
+        getCompletedFilter(state, getters, rootState) {
+            return function (id) {
+                const filterList = getFilterList(rootState.selectPoS);
                 let completedFilterList = [];
                 for (let i in state[filterList][id].data) {
                     completedFilterList.push(state[filterList][id].data[i].value);

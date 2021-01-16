@@ -27,12 +27,12 @@ export default {
   },
   methods: {
     async deleteWord() {
-      this.$store.commit("changeIsSearching", true);
-      this.$store.dispatch("deleteWord");
-      await this.$store.dispatch("closeModal");
+      this.$store.commit("common/changeIsSearching", true);
+      this.$store.dispatch("vocabulary/deleteWord");
+      await this.$store.dispatch("modal/closeModal");
     },
     closeModal() {
-      this.$store.dispatch("closeModal");
+      this.$store.dispatch("modal/closeModal");
     },
   },
 };
