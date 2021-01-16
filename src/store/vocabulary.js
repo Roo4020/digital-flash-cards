@@ -41,7 +41,7 @@ const vocabulary = {
       firebase.firestore().collection('vocabulary').orderBy('id').get()
         .then((doc) => {
           doc.forEach(element => {
-            context.commit("vocabulary/setVocabularyList", {
+            context.commit("setVocabularyList", {
               key: element.data().id - 1,
               data: element.data().value
             });
@@ -58,7 +58,7 @@ const vocabulary = {
         newWord[payload.form[i].keyName] = payload.append[i];
       }
       wordList.push(newWord);
-      context.dispatch("vocabulary/updateWordList", {
+      context.dispatch("updateWordList", {
         key: payload.selectPoS,
         data: wordList
       });
@@ -67,12 +67,12 @@ const vocabulary = {
       const selectPoS = context.state.currentWordAddress.pos;
       let wordList = context.state.vocabularyList[selectPoS];
       wordList.splice(context.state.currentWordAddress.index, 1);
-      await context.dispatch("vocabulary/updateWordList", {
+      await context.dispatch("updateWordList", {
         key: selectPoS,
         data: wordList
       });
 
-      context.commit("vocabulary/initCurrentWordAddress");
+      context.commit("initCurrentWordAddress");
     },
     async updateWordList(context, payload) {
       const docId = getDocLabel(payload.key);
@@ -80,7 +80,7 @@ const vocabulary = {
       await wordRef.update({
         value: payload.data,
       });
-      context.dispatch("vocabulary/getWordList");
+      context.dispatch("getWordList");
     },
   },
 };
