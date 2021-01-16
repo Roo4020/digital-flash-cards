@@ -76,6 +76,7 @@ export default {
     },
   },
   created() {
+    this.$store.dispatch("vocabulary/getWordList");
     this.setSearchResult();
   },
   watch: {

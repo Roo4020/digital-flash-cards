@@ -31,7 +31,6 @@ export default {
   },
   created() {
     this.$store.dispatch("auth/onAuthChanged");
-    this.$store.dispatch("vocabulary/getWordList");
     this.$store.dispatch("modal/closeModal");
   },
 };

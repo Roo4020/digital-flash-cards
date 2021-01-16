@@ -26,6 +26,9 @@ export default {
       formList: FORM_LIST,
     };
   },
+  created() {
+    this.$store.dispatch("vocabulary/getWordList");
+  },
   computed: {
     selectPoS() {
       return this.$store.state.common.selectPoS;
