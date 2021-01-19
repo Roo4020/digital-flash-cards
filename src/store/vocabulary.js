@@ -10,10 +10,7 @@ const vocabulary = {
 
   state: {
     vocabularyList: [],
-    currentWordAddress: {
-      pos: NaN,
-      index: NaN
-    },
+    currentWordIndex: NaN,
   },
 
   getters: {
@@ -29,14 +26,11 @@ const vocabulary = {
     setVocabularyList(state, payload) {
       state.vocabularyList[payload.key] = payload.data;
     },
-    setCurrentWordAddress(state, payload) {
-      state.currentWordAddress = payload;
+    setCurrentWordIndex(state, payload) {
+      state.currentWordIndex = payload;
     },
-    initCurrentWordAddress(state) {
-      state.currentWordAddress = {
-        pos: NaN,
-        index: NaN
-      };
+    initCurrentWordIndex(state) {
+      state.currentWordIndex = NaN;
     },
   },
 
@@ -69,35 +63,31 @@ const vocabulary = {
         });
     },
     async appendWord(context, payload) {
-      let wordList = context.state.vocabularyList[payload.selectPoS];
+      const selectPoS = await context.rootState.common.selectPoS;
+      let wordList = context.state.vocabularyList[selectPoS];
       const newWord = {};
       for (let i in payload.form) {
         newWord[payload.form[i].keyName] = payload.append[i];
       }
       wordList.push(newWord);
-      await context.dispatch("updateWordList", {
-        key: payload.selectPoS,
-        data: wordList
-      });
+      await context.dispatch("updateWordList", wordList);
     },
     async deleteWord(context) {
-      const selectPoS = context.state.currentWordAddress.pos;
+      const selectPoS = await context.rootState.common.selectPoS;
       let wordList = context.state.vocabularyList[selectPoS];
-      wordList.splice(context.state.currentWordAddress.index, 1);
-      await context.dispatch("updateWordList", {
-        key: selectPoS,
-        data: wordList
-      });
+      wordList.splice(context.state.currentWordIndex, 1);
+      await context.dispatch("updateWordList", wordList);
 
-      context.commit("initCurrentWordAddress");
+      context.commit("initCurrentWordIndex");
     },
     async updateWordList(context, payload) {
       const userUid = context.rootState.auth.user.uid;
       const userDocId = await getUserDocId(userUid);
-      const vocabularyDocId = getDocLabel(payload.key);
+      const selectPoS = await context.rootState.common.selectPoS;
+      const vocabularyDocId = getDocLabel(selectPoS);
       const wordRef = firebase.firestore().collection('users').doc(userDocId).collection('vocabulary').doc(vocabularyDocId);
       await wordRef.update({
-        value: payload.data,
+        value: payload,
       }).then(() => {
         alert("更新できました");
       });

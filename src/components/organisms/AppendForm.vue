@@ -104,7 +104,6 @@ export default {
         this.$store.dispatch("vocabulary/appendWord", {
           append: this.appendList,
           form: this.form,
-          selectPoS: this.selectPoS,
         });
         this.resetArray();
       }
