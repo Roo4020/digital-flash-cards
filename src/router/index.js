@@ -1,11 +1,15 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Top from '../views/Top.vue'
-import Translate from '../views/Translate.vue'
-import Search from '../views/Search.vue'
-import Append from '../views/Append.vue'
+import {
+  createRouter,
+  createWebHistory
+} from 'vue-router';
+import Top from '../views/Top.vue';
+import Translate from '../views/Translate.vue';
+import Search from '../views/Search.vue';
+import Append from '../views/Append.vue';
 
-const routes = [
-  {
+import store from '../store';
+
+const routes = [{
     path: '/',
     name: 'Top',
     component: Top,
@@ -25,11 +29,27 @@ const routes = [
     name: 'Append',
     component: Append,
   },
-]
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+  if (to.fullPath === '/') {
+    if (store.state.auth.status) {
+      next('translate')
+    } else {
+      next()
+    }
+  } else {
+    if (store.state.auth.status) {
+      next()
+    } else {
+      router.replace('/');
+    }
+  }
+});
+
+export default router;
