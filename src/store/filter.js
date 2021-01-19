@@ -159,12 +159,12 @@ const filter = {
 
     getters: {
         targetFilterList(state, getters, rootState) {
-                const filterList = getFilterList(rootState.selectPoS);
-                return state[filterList];
+            const filterList = getFilterList(rootState.common.selectPoS);
+            return state[filterList];
         },
         getCompletedFilter(state, getters, rootState) {
             return function (id) {
-                const filterList = getFilterList(rootState.selectPoS);
+                const filterList = getFilterList(rootState.common.selectPoS);
                 let completedFilterList = [];
                 for (let i in state[filterList][id].data) {
                     completedFilterList.push(state[filterList][id].data[i].value);

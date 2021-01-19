@@ -64,10 +64,10 @@ export default {
       return this.$store.state.common.isSearching;
     },
     targetList() {
-      return this.$store.getters.targetList(this.selectPoS);
+      return this.$store.getters["vocabulary/targetList"];
     },
     filterEnterList() {
-      return this.$store.getters.targetFilterList(this.selectPoS);
+      return this.$store.getters["filter/targetFilterList"];
     },
     hitOfKeyWord() {
       const searchField =

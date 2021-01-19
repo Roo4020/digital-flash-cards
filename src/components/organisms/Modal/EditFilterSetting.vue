@@ -62,7 +62,7 @@ export default {
     },
     async completeFilter() {
       for (let i in this.filterEnterList) {
-        const completedFilterList = await this.$store.getters["filter/getCompletedFilter", i];
+        const completedFilterList = await this.$store.getters["filter/getCompletedFilter"](i);
         this.$store.commit("filter/changeSetting", {
           id: i,
           value: completedFilterList,

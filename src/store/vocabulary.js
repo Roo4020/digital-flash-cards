@@ -1,6 +1,10 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 
+import {
+  INITIAL_VOCABULARY_LIST
+} from "@/mixins/initialVocabularyList.js";
+
 const vocabulary = {
   namespaced: true,
 
@@ -14,10 +18,10 @@ const vocabulary = {
 
   getters: {
     targetList(state, getters, rootState) {
-      return state.vocabularyList[rootState.selectPoS];
+      return state.vocabularyList[rootState.common.selectPoS];
     },
     representativeTargetList(state, getters, rootState) {
-      return state.vocabularyList[rootState.selectPoS].filter(word => word.representative);
+      return state.vocabularyList[rootState.common.selectPoS].filter(word => word.representative);
     },
   },
 
@@ -37,8 +41,21 @@ const vocabulary = {
   },
 
   actions: {
-    getWordList(context) {
-      firebase.firestore().collection('vocabulary').orderBy('id').get()
+    setInitialValue(context, payload) {
+      const initialVocabularyList = INITIAL_VOCABULARY_LIST;
+      const subCollectionRef = firebase.firestore().collection('users').doc(payload).collection('vocabulary');
+      for (let i = 0; i < 5; i++) {
+        const docId = getDocLabel(i);
+        subCollectionRef.doc(docId).set({
+          id: i,
+          value: initialVocabularyList[i]
+        });
+      }
+    },
+    async getWordList(context) {
+      const userUid = context.rootState.auth.user.uid;
+      const docId = await getUserDocId(userUid);
+      await firebase.firestore().collection('users').doc(docId).collection('vocabulary').orderBy('id').get()
         .then((doc) => {
           doc.forEach(element => {
             context.commit("setVocabularyList", {
@@ -51,14 +68,14 @@ const vocabulary = {
           console.log(error);
         });
     },
-    appendWord(context, payload) {
+    async appendWord(context, payload) {
       let wordList = context.state.vocabularyList[payload.selectPoS];
       const newWord = {};
       for (let i in payload.form) {
         newWord[payload.form[i].keyName] = payload.append[i];
       }
       wordList.push(newWord);
-      context.dispatch("updateWordList", {
+      await context.dispatch("updateWordList", {
         key: payload.selectPoS,
         data: wordList
       });
@@ -75,8 +92,10 @@ const vocabulary = {
       context.commit("initCurrentWordAddress");
     },
     async updateWordList(context, payload) {
-      const docId = getDocLabel(payload.key);
-      const wordRef = firebase.firestore().collection('vocabulary').doc(docId);
+      const userUid = context.rootState.auth.user.uid;
+      const userDocId = getUserDocId(userUid);
+      const vocabularyDocId = getDocLabel(payload.key);
+      const wordRef = firebase.firestore().collection('users').doc(userDocId).collection('vocabulary').doc(vocabularyDocId);
       await wordRef.update({
         value: payload.data,
       });
@@ -87,7 +106,7 @@ const vocabulary = {
 
 export default vocabulary;
 
-function getDocLabel(pos) {
+function getDocLabel(id) {
   const docLabelList = [
     "nounList",
     "verbList",
@@ -95,5 +114,15 @@ function getDocLabel(pos) {
     "prepositionList",
     "conjunctionList"
   ];
-  return docLabelList[pos];
+  return docLabelList[id];
+}
+
+async function getUserDocId(userUid) {
+  let docId = "";
+  await firebase.firestore().collection('users').where('uid', '==', userUid).get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+      docId = doc.id;
+    });
+  });
+  return docId;
 }
