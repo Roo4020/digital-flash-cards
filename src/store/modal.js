@@ -22,11 +22,11 @@ const modal = {
             commit("setIsOpening", true);
             commit("setPath", payload);
         },
-        closeModal({
+        async closeModal({
             commit
         }) {
             commit("setIsOpening", false);
-            commit("setPath", "");
+            commit("setPath", null);
         },
     },
 };
