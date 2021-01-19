@@ -106,7 +106,6 @@ export default {
           form: this.form,
           selectPoS: this.selectPoS,
         });
-        alert("追加できました");
         this.resetArray();
       }
     },

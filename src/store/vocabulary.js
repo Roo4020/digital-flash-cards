@@ -47,7 +47,7 @@ const vocabulary = {
       for (let i = 0; i < 5; i++) {
         const docId = getDocLabel(i);
         subCollectionRef.doc(docId).set({
-          id: i,
+          id: i + 1,
           value: initialVocabularyList[i]
         });
       }
@@ -93,12 +93,15 @@ const vocabulary = {
     },
     async updateWordList(context, payload) {
       const userUid = context.rootState.auth.user.uid;
-      const userDocId = getUserDocId(userUid);
+      const userDocId = await getUserDocId(userUid);
       const vocabularyDocId = getDocLabel(payload.key);
       const wordRef = firebase.firestore().collection('users').doc(userDocId).collection('vocabulary').doc(vocabularyDocId);
       await wordRef.update({
         value: payload.data,
+      }).then(() => {
+        alert("更新できました");
       });
+
       context.dispatch("getWordList");
     },
   },
