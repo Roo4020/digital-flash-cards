@@ -14,6 +14,7 @@
 
 <script>
 import TextField from "@/components/atoms/TextField.vue";
+import PasswordField from "@/components/atoms/PasswordField.vue";
 import SelectBox from "@/components/atoms/SelectBox.vue";
 import RadioButton from "@/components/atoms/RadioButton.vue";
 import CheckBox from "@/components/atoms/CheckBox.vue";
@@ -22,6 +23,7 @@ export default {
   name: "FormComponent",
   components: {
     TextField,
+    PasswordField,
     SelectBox,
     RadioButton,
     CheckBox,

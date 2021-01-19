@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import firebase from 'firebase/app';
+import "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyC8oLrqqFbNP7IcuMeQpj7eOUo5Q8BJY5s",
@@ -15,5 +16,8 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+firebase
+  .auth()
+  .setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
 createApp(App).use(store).use(router).mount('#app')
