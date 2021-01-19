@@ -87,7 +87,7 @@ export default {
     transform: translateX(200px);
     text-overflow: ellipsis;
     white-space: nowrap;
-    transition: all 0.4s ease;
+    transition: all 0.2s ease;
     &-header {
       width: 100%;
       height: 72px;
