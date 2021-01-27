@@ -1,14 +1,14 @@
 <template>
-  <div class="header-logo" @click="transTop">Flash Cards</div>
+  <div class="header-logo" @click="transFlashCards">Flash Cards</div>
 </template>
 
 <script>
 export default {
   name: 'HeaderLogo',
   methods: {
-      transTop() {
-        this.$router.push("/");
-      },
+      transFlashCards() {
+      this.$router.push("/translate");
+    },
   },
 };
 </script>
