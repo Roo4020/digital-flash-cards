@@ -53,7 +53,7 @@ export const FORM_LIST = [
         {
             label: "活用",
             keyName: "conjugationList",
-            validate: /^[a-zA-ZäöüÄÖÜß]+$/,
+            validate: /^[a-zA-ZäöüÄÖÜß ]+$/,
         },
         {
             label: "日→独",
