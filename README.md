@@ -16,8 +16,6 @@ firebaseを用いてユーザーの認証をしており、ユーザーごとに
 
 URL -> https://digital-flash-cards.web.app/
 
-`E-mail: user@user.com  Password: password` でログインできます。
-
 ## Project setup
 ```
 npm install
