@@ -14,6 +14,10 @@
 
 firebaseを用いてユーザーの認証をしており、ユーザーごとに単語帳を保存しています。
 
+URL -> https://digital-flash-cards.web.app/
+
+`E-mail: user@user.com  Password: password` でログインできます。
+
 ## Project setup
 ```
 npm install
