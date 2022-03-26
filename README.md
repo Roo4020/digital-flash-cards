@@ -14,27 +14,10 @@
 
 firebaseを用いてユーザーの認証をしており、ユーザーごとに単語帳を保存しています。
 
-URL -> https://digital-flash-cards.web.app/
+## URL
 
-## Project setup
-```
-npm install
-```
+https://digital-flash-cards.web.app
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## テストユーザー
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+**E-mail: user@user.com Password: password**　でログインできます。
